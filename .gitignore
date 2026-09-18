@@ -1,0 +1,21 @@
+# Build
+cmake-build-*/
+build/
+out/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.o
+*.a
+*.so
+*.dylib
+*.exe
+
+# IDE
+.idea/
+.vscode/
+*.user
+
+# OS
+.DS_Store
