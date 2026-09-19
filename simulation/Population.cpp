@@ -11,11 +11,3 @@ void Population::addAgent(Agent agent) {
 std::size_t Population::size() const {
     return agents.size();
 }
-
-std::vector<double> Population::getFitnesses() {
-    std::vector<double> fitnesses;
-
-    for (auto agent : agents) {
-
-    }
-}

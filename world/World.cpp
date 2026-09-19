@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdint>
+#include <limits>
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
@@ -51,6 +52,31 @@ double World::clearance(const Vec2& point) const {
     return nearest;
 }
 
+double World::boundaryDistance(const Vec2& origin, const Vec2& direction) const {
+    // Origin je uvek unutar arene (validno stanje simulacije), pa nam treba
+    // samo najbliza izlazna ivica, ne pun slab-test sa ulaznom tackom.
+    double tx = std::numeric_limits<double>::infinity();
+    if (direction.x > 0.0) tx = (limitX - origin.x) / direction.x;
+    else if (direction.x < 0.0) tx = (-limitX - origin.x) / direction.x;
+
+    double ty = std::numeric_limits<double>::infinity();
+    if (direction.y > 0.0) ty = (limitY - origin.y) / direction.y;
+    else if (direction.y < 0.0) ty = (-limitY - origin.y) / direction.y;
+
+    return std::min(tx, ty);
+}
+
+double World::castRay(const Vec2& origin, const Vec2& direction, double maxDistance) const {
+    double closest = std::min(maxDistance, boundaryDistance(origin, direction));
+
+    for (const auto& obstacle : obstacles) {
+        if (auto hit = obstacle->intersectRay(origin, direction, closest)) {
+            closest = *hit;
+        }
+    }
+
+    return closest;
+}
 
 
 void World::draw(sf::RenderWindow& window) const {

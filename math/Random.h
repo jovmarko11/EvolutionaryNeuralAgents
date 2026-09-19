@@ -13,6 +13,7 @@ namespace Random {
 
     std::mt19937& engine();
 
+    bool bernoulli(double p);
     double uniform(double min, double max);
     double normal(double mean, double stddev);
     int uniformInt(int min, int max);

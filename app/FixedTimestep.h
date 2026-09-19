@@ -37,6 +37,7 @@ public:
 
     double getStepDuration() const;
 
+
 private:
     sf::Clock clock;
 

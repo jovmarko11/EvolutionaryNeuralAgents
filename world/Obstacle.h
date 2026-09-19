@@ -4,6 +4,7 @@
 
 #ifndef EVOLUTIONARYNEURALAGENTS_OBSTACLE_H
 #define EVOLUTIONARYNEURALAGENTS_OBSTACLE_H
+#include <optional>
 #include "../math/Vec2.h"
 #include "../rendering/Drawable.h"
 #include "../rendering/DrawParams.h"
@@ -28,6 +29,8 @@ public:
 
     // Disk (centar, poluprecnik) dodiruje prepreku.
     bool overlaps(const Vec2& centre, double radius) const;
+
+    virtual std::optional<double> intersectRay(const Vec2& origin, const Vec2& direction, double maxDistance) const = 0;
 };
 
 inline Vec2 Obstacle::getPosition() const { return position; }

@@ -73,6 +73,11 @@ add_executable(EvolutionaryNeuralAgents
         evolution/Crossover.h
         evolution/Mutation.cpp
         evolution/Mutation.h
+        app/Trainer.cpp
+        app/Trainer.h
+        app/Program.cpp
+        app/Program.h
+        evolution/Individual.h
 )
 
 target_link_libraries(EvolutionaryNeuralAgents

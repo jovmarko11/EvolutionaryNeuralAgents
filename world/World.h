@@ -25,6 +25,10 @@ private:
     void drawBorder(sf::RenderWindow& window) const;
     void drawGrid(sf::RenderWindow& window) const;
 
+    // Rastojanje do izlaska iz granica arene duz zraka.
+    // Pretpostavlja da je origin unutar [-limitX,limitX] x [-limitY,limitY].
+    double boundaryDistance(const Vec2& origin, const Vec2& direction) const;
+
 public:
     World(double limitX, double limitY,
           DrawParams borderParams = DrawParams{{255, 255, 255, 255}, 0.1f},
@@ -43,6 +47,9 @@ public:
     // Rastojanje do najblize prepreke ili granice sveta.
     // Negativno znaci da je tacka vec unutar necega.
     double clearance(const Vec2& point) const;
+
+    double castRay(const Vec2 &origin, const Vec2 &direction, double maxDistance) const;
+
 
     double getLimitX() const;
     double getLimitY() const;

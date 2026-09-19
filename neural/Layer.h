@@ -23,7 +23,24 @@ public:
     std::size_t getParameterCount() const;
     void flattenInto(std::vector<double>& out) const;
     std::size_t restoreFrom(const std::vector<double>& in, std::size_t offset);
+
+    const Matrix& getWeights() const;
+    const Matrix& getBiases() const;
+
+    void setWeights(const Matrix& weights);
+    void setBiases(const Matrix& biases);
 };
+
+inline const Matrix& Layer::getWeights() const {
+    return weights;
+}
+
+inline const Matrix& Layer::getBiases() const {
+    return biases;
+}
+
+
+
 
 
 #endif //EVOLUTIONARYNEURALAGENTS_LAYER_H

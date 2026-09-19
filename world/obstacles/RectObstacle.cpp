@@ -37,3 +37,38 @@ double RectObstacle::distanceTo(const Vec2& point) const {
 
     return outside + inside;
 }
+
+std::optional<double> RectObstacle::intersectRay(const Vec2& origin, const Vec2& direction, double maxDistance) const {
+    const double minX = position.x - width / 2.0;
+    const double maxX = position.x + width / 2.0;
+    const double minY = position.y - height / 2.0;
+    const double maxY = position.y + height / 2.0;
+
+    double tmin = 0.0, tmax = maxDistance;
+
+    // X osa
+    if (std::abs(direction.x) < 1e-12) {
+        if (origin.x < minX || origin.x > maxX) return std::nullopt;
+    } else {
+        double t1 = (minX - origin.x) / direction.x;
+        double t2 = (maxX - origin.x) / direction.x;
+        if (t1 > t2) std::swap(t1, t2);
+        tmin = std::max(tmin, t1);
+        tmax = std::min(tmax, t2);
+        if (tmin > tmax) return std::nullopt;
+    }
+
+    // Y osa — identicno, akumulira se u isti tmin/tmax
+    if (std::abs(direction.y) < 1e-12) {
+        if (origin.y < minY || origin.y > maxY) return std::nullopt;
+    } else {
+        double t1 = (minY - origin.y) / direction.y;
+        double t2 = (maxY - origin.y) / direction.y;
+        if (t1 > t2) std::swap(t1, t2);
+        tmin = std::max(tmin, t1);
+        tmax = std::min(tmax, t2);
+        if (tmin > tmax) return std::nullopt;
+    }
+
+    return tmin;
+}

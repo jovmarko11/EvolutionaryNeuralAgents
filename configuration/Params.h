@@ -11,12 +11,17 @@
 
 namespace Params {
 
+    // Simulation
+    inline constexpr int visualizeEveryN = 1;
+    inline constexpr int visualizeFromGeneration = 0;
+    inline constexpr double hiddenSpeedMultiplier = 1;
+
     // Svet
     inline constexpr double worldLimitX = 20.0;
     inline constexpr double worldLimitY = 30.0;
 
     // Populacija
-    inline constexpr int numAgents = 6;
+    inline constexpr int numAgents = 100;
     inline constexpr int maxSteps = 1000;   // duzina epizode
     inline constexpr unsigned int randomSeed = 42;
 
@@ -43,27 +48,22 @@ namespace Params {
     inline constexpr Color ObstacleColor{255, 255, 255, 255};
     inline constexpr Color TargetColor{40, 90, 220, 255};
 
+    // GeneticAlgorithm
+    inline constexpr double elitismRatio = 0.08;
+    inline constexpr double mutationRatio = 0.20;
+    inline constexpr double mutationStrength = 0.20;
+    inline constexpr int tournamentSize = 5;
+
     // Mreza
-    // Ulaz mreze. Po senzoru samo blizina; status reja se ne salje mrezi
-    // (jedini bit koji nije rekonstruktivan iz blizine razlikovao bi zid od
-    // granice sveta, a oba se izbegavaju isto).
+
     inline constexpr int inputsPerSensor = 1;  // proximity = 1 - distanca
     inline constexpr int extraInputs = 4;      // sin i cos ugla ka cilju, distanceToGoal, speed
     inline constexpr int inputSize = numOfSensors * inputsPerSensor + extraInputs;
     inline constexpr int outputSize = 2;       // turn, speed
 
-    // Duzine su u jedinicama sveta, vreme u sekundama.
-    // maxSpeed i maxTurnRate su BRZINE po sekundi — mnoze se sa timeStep.
     inline constexpr double maxSpeed    = 10.0;              // jed/s
     inline constexpr double maxTurnRate = std::numbers::pi;  // rad/s
     inline constexpr double timeStep    = 0.02;              // s/korak
-
-    // Izvedeno (proveri kad menjas gornje tri vrednosti):
-    //   pomeraj po koraku    = maxSpeed * timeStep        = 0.20 jed
-    //   rotacija po koraku   = maxTurnRate * timeStep     = 3.6 st
-    //   poluprecnik zaokreta = maxSpeed / maxTurnRate     = 3.18 jed
-    //   trajanje epizode     = maxSteps * timeStep        = 20 s simuliranog vremena
-    //   (realno vreme zavisi od FPS-a — vidi app/FixedTimestep)
 
     inline const std::vector<std::size_t> networkLayerSizes = {
         static_cast<std::size_t>(inputSize),
@@ -71,6 +71,11 @@ namespace Params {
         static_cast<std::size_t>(outputSize)
     };
 
+
+    // window
+    inline constexpr unsigned windowWidth = 800;
+    inline constexpr unsigned windowHeight = 600;
+    inline constexpr unsigned framerateLimit = 120;
 }
 
 #endif //EVOLUTIONARYNEURALAGENTS_PARAMS_H

@@ -5,20 +5,24 @@
 #ifndef EVOLUTIONARYNEURALAGENTS_GENETICALGORITHM_H
 #define EVOLUTIONARYNEURALAGENTS_GENETICALGORITHM_H
 #include "Crossover.h"
+#include "Individual.h"
 #include "Mutation.h"
 #include "Selection.h"
 #include "../simulation/Population.h"
+#include "../configuration/Params.h"
 
-struct Individual {
-    std::vector<double> genome;
-    double fitness = 0.0;
-};
 
 class GeneticAlgorithm {
-    double elitismRatio, mutationRatio, mutationStrength;
+    double elitismRatio;
+
+    Mutation mutation;
+    Selection selection;
 
 public:
-    GeneticAlgorithm(double elitismRatio = 0.08, double mutationRatio = 0.10, double mutationStrength = 0.10);
+    explicit GeneticAlgorithm(double elitismRatio = Params::elitismRatio,
+                    int tournamentSize = Params::tournamentSize,
+                    double mutationRatio = Params::mutationRatio,
+                    double mutationStrength = Params::mutationStrength);
 
     std::vector<std::vector<double>> nextGeneration(const std::vector<Individual>& current) const;
 

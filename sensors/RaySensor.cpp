@@ -12,21 +12,11 @@
 RaySensor::RaySensor(Vec2 direction) : direction(direction) {}
 
 ScanResult RaySensor::scan(const World& world, const Vec2& origin) const {
+    const double hitDistance = world.castRay(origin, direction, Params::sensorMaxDistance);
+    const double normalized = hitDistance / Params::sensorMaxDistance;
+    const SimStatus status = (hitDistance < Params::sensorMaxDistance) ? SimStatus::Blocked : SimStatus::Ongoing;
 
-    for (double distance = 0; distance < Params::sensorMaxDistance; distance += Params::sensorStepSize) {
-
-        const Vec2 ray = origin + this->direction * distance;
-        const SimStatus status = world.inRange(ray);
-
-        // Cilj nije prepreka — rej prolazi kroz njega. Inace bi cilj mrezi
-        // izgledao kao opasnost i agent bi naucio da bezi od njega.
-        if (status == SimStatus::Ongoing || status == SimStatus::ReachedTarget) {
-            continue;
-        }
-
-        return ScanResult(status, distance / Params::sensorMaxDistance);
-    }
-    return ScanResult(SimStatus::Ongoing, 1.0);
+    return ScanResult(status, normalized);
 }
 
 void RaySensor::rotate(double turnAngle) {

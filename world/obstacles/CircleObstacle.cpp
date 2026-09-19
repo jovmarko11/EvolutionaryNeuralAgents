@@ -25,3 +25,20 @@ void CircleObstacle::draw(sf::RenderWindow& window) const {
 double CircleObstacle::distanceTo(const Vec2& point) const {
     return (point - position).length() - radius;
 }
+
+std::optional<double> CircleObstacle::intersectRay(const Vec2& origin, const Vec2& direction, double maxDistance) const {
+    const Vec2 L = position - origin;
+    const double tca = L.dot(direction);
+    const double d2 = L.lengthSquared() - tca * tca;
+    const double r2 = radius * radius;
+
+    if (d2 > r2) return std::nullopt;
+
+    const double thc = std::sqrt(r2 - d2);
+    const double t0 = tca - thc;
+    const double t1 = tca + thc;
+    const double t = (t0 >= 0.0) ? t0 : t1;
+
+    if (t < 0.0 || t > maxDistance) return std::nullopt;
+    return t;
+}

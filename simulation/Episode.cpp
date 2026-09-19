@@ -24,6 +24,7 @@ Episode::Episode(const World& world, Agent& agent, int maxSteps)
         (world.getTarget().getPosition() - agent.getPosition()).length();
 
     result.steps = 0;
+    result.maxSteps = Params::maxSteps;
     result.distanceTravelled = 0.0;
     result.initialDistanceToTarget = distanceToTarget;
     result.bestDistanceToTarget = distanceToTarget;

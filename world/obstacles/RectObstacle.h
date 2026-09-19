@@ -19,6 +19,8 @@ public:
 
     double distanceTo(const Vec2& point) const override;
 
+    std::optional<double> intersectRay(const Vec2& origin, const Vec2& direction, double maxDistance) const override;
+
     void draw(sf::RenderWindow& window) const override;
 };
 

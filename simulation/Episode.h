@@ -8,6 +8,7 @@
 
 struct EpisodeResult {
     int steps;
+    int maxSteps;
     double distanceTravelled;
     double initialDistanceToTarget;
     double bestDistanceToTarget;

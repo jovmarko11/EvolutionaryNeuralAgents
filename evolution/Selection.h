@@ -4,14 +4,17 @@
 
 #ifndef EVOLUTIONARYNEURALAGENTS_SELECTION_H
 #define EVOLUTIONARYNEURALAGENTS_SELECTION_H
+#include <vector>
+
+#include "Individual.h"
 
 
 class Selection {
-
-    Population population;
-
+    int tournamentSize;
 public:
-    void select();
+    explicit Selection(int tournamentSize);
+
+    const Individual& tournament(const std::vector<Individual>& population) const;
 };
 
 

@@ -35,4 +35,10 @@ namespace Random {
         return dist(generator);
     }
 
+    bool bernoulli(double p) {
+        double u = uniform(0.0, 1.0);
+        if (u <= p) return true;
+        return false;
+    }
+
 }

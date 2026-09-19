@@ -8,9 +8,10 @@
 
 namespace FitnessWeights {
     inline constexpr double progress = 10.0;
-    inline constexpr double survival = 0.05;
+    inline constexpr double survival = 0.015;
     inline constexpr double goal = 1000.0;
     inline constexpr double collision = 50.0;
+    inline constexpr double speed = 200.0;
 }
 
 struct FitnessBreakdown {
@@ -18,8 +19,9 @@ struct FitnessBreakdown {
     double survival = 0;
     double goal = 0;
     double collision = 0;   // negativan
+    double speed = 0;
 
-    double total() const { return progress + survival + goal + collision; }
+    double total() const { return progress + survival + goal + collision + speed; }
 };
 
 FitnessBreakdown fitnessBreakdown(const EpisodeResult& result);

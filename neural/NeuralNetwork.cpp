@@ -39,3 +39,44 @@ Matrix NeuralNetwork::forward(const Matrix& input) const {
 
     return result;
 }
+
+
+std::size_t NeuralNetwork::getParameterCount() const {
+    std::size_t result = 0;
+    for (const auto& layer : layers) {
+        result += layer.getParameterCount();
+    }
+    return result;
+}
+
+std::vector<double> NeuralNetwork::getParameters() const {
+    std::vector<double> result;
+    result.reserve(getParameterCount());
+
+    // za svaki layer, prvo weights pa biases
+    for (const auto& layer : layers) {
+        const Matrix& weights = layer.getWeights();
+        for (std::size_t i = 0; i < weights.getRows(); i++) {
+            for (std::size_t j = 0; j < weights.getCols(); j++) {
+                result.push_back(weights(i,j));
+            }
+        }
+        const Matrix& biases = layer.getBiases();
+        for (std::size_t i = 0; i < biases.getRows(); i++) {
+            for (std::size_t j = 0; j < biases.getCols(); j++) {
+                result.push_back(biases(i,j));
+            }
+        }
+    }
+    assert(result.size() == getParameterCount());
+    return result;
+}
+
+void NeuralNetwork::setParameters(const std::vector<double>& genome) {
+    assert(genome.size() == getParameterCount());
+    std::size_t offset = 0;
+    for (Layer& layer : layers) {
+        offset = layer.restoreFrom(genome, offset);
+    }
+    assert(offset == getParameterCount());
+}

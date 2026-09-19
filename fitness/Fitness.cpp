@@ -11,5 +11,10 @@ FitnessBreakdown fitnessBreakdown(const EpisodeResult& result) {
     b.goal      = result.reachedTarget ? FitnessWeights::goal : 0.0;
     b.collision = result.crashed ? -FitnessWeights::collision : 0.0;
 
+    if (result.reachedTarget) {
+        const double remainingFraction = static_cast<double>(result.maxSteps - result.steps) / result.maxSteps;
+        b.speed = FitnessWeights::speed * remainingFraction;
+    }
+
     return b;
 }

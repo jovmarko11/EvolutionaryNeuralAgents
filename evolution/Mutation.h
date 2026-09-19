@@ -4,16 +4,16 @@
 
 #ifndef EVOLUTIONARYNEURALAGENTS_MUTATION_H
 #define EVOLUTIONARYNEURALAGENTS_MUTATION_H
-#include "../simulation/Population.h"
+#include <vector>
 
 
 class Mutation {
+    double mutationRatio, mutationStrength;
 
-    public:
-    Mutation (Population& population);
+public:
+    Mutation(double mutationRatio, double mutationStrength);
 
-    void mutate();
-
+    void mutate(std::vector<double>& genome) const;
 };
 
 

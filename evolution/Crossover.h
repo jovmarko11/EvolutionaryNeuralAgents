@@ -4,13 +4,14 @@
 
 #ifndef EVOLUTIONARYNEURALAGENTS_CROSSOVER_H
 #define EVOLUTIONARYNEURALAGENTS_CROSSOVER_H
+#include <vector>
 
 
 class Crossover {
-
 public:
+    static std::vector<double> uniform(const std::vector<double>& a, const std::vector<double>& b);
 
-    void crossover();
+    static std::vector<double> blend(const std::vector<double>& a, const std::vector<double>& b);
 };
 
 
