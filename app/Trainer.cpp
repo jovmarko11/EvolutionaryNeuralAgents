@@ -20,6 +20,7 @@ void Trainer::step(int steps, Population& population) {
 void Trainer::advanceGeneration(Population& population) {
     if (!simulation.generationFinished()) return;
 
+    simulation.recordGenerationStats();
     simulation.printGenerationStats();
 
     const std::vector<Individual> current = collect(population);

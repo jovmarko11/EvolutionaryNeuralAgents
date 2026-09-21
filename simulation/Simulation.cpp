@@ -3,13 +3,9 @@
 //
 
 #include "Simulation.h"
-#include "../fitness/Fitness.h"
 
 #include <algorithm>
-#include <iostream>
-#include <map>
-#include <numeric>
-#include <ostream>
+#include <cstdio>
 
 Simulation::Simulation(World& world, Population& population, int maxSteps)
     : world(world),
@@ -57,49 +53,30 @@ void Simulation::render(sf::RenderWindow& window) const {
     renderer.render(window);
 }
 
-void Simulation::printGenerationStats() const {
+void Simulation::recordGenerationStats() {
     if (episodes.empty()) return;
 
-    std::vector<double> values;
-    values.reserve(episodes.size());
-
-    const EpisodeResult* best = nullptr;
-    double bestFitness = -std::numeric_limits<double>::infinity();
-    int reached = 0, crashed = 0, timedOut = 0;
-    double sumSteps = 0.0, maxProgress = 0.0;
+    std::vector<EpisodeResult> results;
+    results.reserve(episodes.size());
 
     for (const Episode& episode : episodes) {
-        const EpisodeResult& r = episode.getResult();
-        const double f = fitness(r);
-
-        values.push_back(f);
-        if (f > bestFitness) { bestFitness = f; best = &r; }
-
-        reached  += r.reachedTarget;
-        crashed  += r.crashed;
-        timedOut += r.timeOut;
-
-        sumSteps += r.steps;
-        maxProgress = std::max(maxProgress, r.progress());
+        results.push_back(episode.getResult());
     }
 
-    std::sort(values.begin(), values.end());
+    statistics.processGeneration(generation, results);
+}
 
-    const std::size_t n = values.size();
-    const double mean = std::accumulate(values.begin(), values.end(), 0.0) / n;
-    const double median = (n % 2) ? values[n/2] : 0.5 * (values[n/2 - 1] + values[n/2]);
+void Simulation::printGenerationStats() const {
+    if (statistics.getHistory().empty()) return;
 
-    double variance = 0.0;
-    for (const double v : values) variance += (v - mean) * (v - mean);
-
-    const FitnessBreakdown b = fitnessBreakdown(*best);
+    const GenerationStatistics& gs = statistics.getLatest();
 
     std::printf("%4d | %8.1f %7.1f %7.1f %7.1f %7.1f | %5d %5d %5d | %7.2f %7.1f | %7.1f %5.1f %6.1f %6.1f\n",
-        generation,
-        values.back(), mean, median, values.front(), std::sqrt(variance / n),
-        reached, crashed, timedOut,
-        maxProgress, sumSteps / n,
-        b.progress, b.survival, b.goal, b.collision);
+        gs.generation,
+        gs.bestFitness, gs.meanFitness, gs.medianFitness, gs.worstFitness, gs.stdevFitness,
+        gs.reach, gs.crash, gs.tout,
+        gs.maxProgress, gs.averageSteps,
+        gs.bestBreakdown.progress, gs.bestBreakdown.survival, gs.bestBreakdown.goal, gs.bestBreakdown.collision);
 }
 
 void Simulation::printGenerationStatsHeader() {
@@ -107,4 +84,3 @@ void Simulation::printGenerationStatsHeader() {
         "gen", "best", "mean", "median", "worst", "stdev",
         "reach", "crash", "tout", "maxProg", "avgStep", "prog", "surv", "goal", "crash");
 }
-

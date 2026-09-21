@@ -78,6 +78,17 @@ add_executable(EvolutionaryNeuralAgents
         app/Program.cpp
         app/Program.h
         evolution/Individual.h
+        gui/UILayer.cpp
+        gui/UILayer.h
+        statistics/Statistics.cpp
+        statistics/Statistics.h
+        statistics/GenerationStatistics.h
+        statistics/Calculation.cpp
+        statistics/Calculation.h
+        statistics/Storage.cpp
+        statistics/Storage.h
+        statistics/Export.cpp
+        statistics/Export.h
 )
 
 target_link_libraries(EvolutionaryNeuralAgents

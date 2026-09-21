@@ -11,6 +11,7 @@
 #include "../world/World.h"
 #include "../configuration/Params.h"
 #include "../rendering/Renderer.h"
+#include "../statistics/Statistics.h"
 
 namespace sf { class RenderWindow; }
 
@@ -22,6 +23,8 @@ class Simulation {
     std::vector<Episode> episodes;
     int maxSteps;
     int generation;
+
+    Statistics statistics;
 
 public:
     Simulation(World& world, Population& population, int maxSteps = Params::maxSteps);
@@ -37,12 +40,17 @@ public:
     int getGeneration() const;
     int getMaxSteps() const;
 
+    void recordGenerationStats();
+
     void printGenerationStats() const;
     static void printGenerationStatsHeader();
+
+    const Statistics& getStatistics() const;
 };
 
 inline const std::vector<Episode>& Simulation::getEpisodes() const { return episodes; }
 inline int Simulation::getGeneration() const { return generation; }
 inline int Simulation::getMaxSteps() const { return maxSteps; }
+inline const Statistics& Simulation::getStatistics() const { return statistics; }
 
 #endif //EVOLUTIONARYNEURALAGENTS_SIMULATION_H

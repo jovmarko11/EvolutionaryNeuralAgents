@@ -1,0 +1,13 @@
+//
+// Created by Marko Jovanovic on 19. 9. 2026..
+//
+
+#ifndef EVOLUTIONARYNEURALAGENTS_UILAYER_H
+#define EVOLUTIONARYNEURALAGENTS_UILAYER_H
+
+
+class UILayer {
+};
+
+
+#endif //EVOLUTIONARYNEURALAGENTS_UILAYER_H
