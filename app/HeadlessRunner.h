@@ -1,0 +1,12 @@
+//
+// Created by Marko Jovanovic on 22. 9. 2026..
+//
+
+#ifndef EVOLUTIONARYNEURALAGENTS_HEADLESSRUNNER_H
+#define EVOLUTIONARYNEURALAGENTS_HEADLESSRUNNER_H
+
+int headless_main(int argc, char** argv);
+
+
+
+#endif //EVOLUTIONARYNEURALAGENTS_HEADLESSRUNNER_H

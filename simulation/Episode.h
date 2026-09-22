@@ -31,9 +31,6 @@ class Episode {
 public:
     Episode(const World& world, Agent& agent, int maxSteps);
 
-    // Epizoda deli referencu na tudjeg agenta, pa kopija nema smislenu
-    // semantiku: step() nad kopijom bi pomerao pravog agenta, a rezultat
-    // upisao u kopiju. Premestanje ostaje dozvoljeno da bi std::vector radio.
     Episode(const Episode&) = delete;
     Episode& operator=(const Episode&) = delete;
     Episode(Episode&&) = default;

@@ -68,6 +68,10 @@ void Program::updateVisualizationPolicy() {
     visualizationEnabled = shouldVisualize();
 
     if (!timeStep.isPaused()) {
-        timeStep.setSpeedMultiplier(visualizationEnabled ? 1.0 : Params::hiddenSpeedMultiplier);
+        timeStep.setSpeedMultiplier(visualizationEnabled ? Params::visibleSpeedMultiplier : Params::hiddenSpeedMultiplier);
     }
+}
+
+void initWindow() {
+
 }

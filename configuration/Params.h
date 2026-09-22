@@ -21,7 +21,7 @@ namespace Params {
     inline constexpr double worldLimitY = 30.0;
 
     // Populacija
-    inline constexpr int numAgents = 100;
+    inline constexpr int numAgents = 200;
     inline constexpr int maxSteps = 1000;   // duzina epizode
     inline constexpr unsigned int randomSeed = 42;
 
@@ -76,6 +76,7 @@ namespace Params {
     inline constexpr unsigned windowWidth = 800;
     inline constexpr unsigned windowHeight = 600;
     inline constexpr unsigned framerateLimit = 120;
+    inline constexpr double visibleSpeedMultiplier = 50.0;
 }
 
 #endif //EVOLUTIONARYNEURALAGENTS_PARAMS_H

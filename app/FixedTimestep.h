@@ -9,17 +9,9 @@
 
 #include "../configuration/Params.h"
 
-/*
- * Fiksni korak simulacije, nezavisan od broja frejmova u sekundi.
-
- * Posledica: broj koraka u sekundi je uvek 1/timeStep, bez obzira da li
- * program crta 30, 60 ili 700 frejmova u sekundi.
- *
- */
 class FixedTimestep {
 public:
-    explicit FixedTimestep(double stepDuration = Params::timeStep,
-                           double maxFrameTime = 0.25);
+    explicit FixedTimestep(double stepDuration = Params::timeStep, double maxFrameTime = 0.25);
 
     // Meri proteklo realno vreme i vraca broj koraka za ovaj frejm.
     int beginFrame();

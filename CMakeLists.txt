@@ -89,6 +89,8 @@ add_executable(EvolutionaryNeuralAgents
         statistics/Storage.h
         statistics/Export.cpp
         statistics/Export.h
+        app/HeadlessRunner.cpp
+        app/HeadlessRunner.h
 )
 
 target_link_libraries(EvolutionaryNeuralAgents
