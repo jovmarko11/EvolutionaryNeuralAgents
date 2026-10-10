@@ -21,7 +21,7 @@ namespace Params {
     inline constexpr double worldLimitY = 30.0;
 
     // Populacija
-    inline constexpr int numAgents = 200;
+    inline constexpr int numAgents = 100;
     inline constexpr int maxSteps = 1000;   // duzina epizode
     inline constexpr unsigned int randomSeed = 42;
 
@@ -47,6 +47,7 @@ namespace Params {
     inline constexpr Color AgentColor{220, 40, 40, 255};
     inline constexpr Color ObstacleColor{255, 255, 255, 255};
     inline constexpr Color TargetColor{40, 90, 220, 255};
+    inline constexpr Color BestAgentColor{40, 200, 40, 255};
 
     // GeneticAlgorithm
     inline constexpr double elitismRatio = 0.08;
@@ -67,16 +68,16 @@ namespace Params {
 
     inline const std::vector<std::size_t> networkLayerSizes = {
         static_cast<std::size_t>(inputSize),
-        10,                                      // skriveni sloj
+        10, 4,                                  // skriveni sloj
         static_cast<std::size_t>(outputSize)
     };
 
 
     // window
-    inline constexpr unsigned windowWidth = 800;
-    inline constexpr unsigned windowHeight = 600;
+    inline constexpr unsigned windowWidth = 1600;
+    inline constexpr unsigned windowHeight = 900;
     inline constexpr unsigned framerateLimit = 120;
-    inline constexpr double visibleSpeedMultiplier = 50.0;
+    inline constexpr double visibleSpeedMultiplier = 2.0;
 }
 
 #endif //EVOLUTIONARYNEURALAGENTS_PARAMS_H

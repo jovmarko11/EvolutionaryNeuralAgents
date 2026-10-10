@@ -14,23 +14,25 @@ Renderer::Renderer(World& world, Population& population)
     : world(world), population(population) {}
 
 
-sf::View Renderer::makeWorldView(sf::Vector2u windowSize) const {
-    const sf::Vector2f worldSize(
-        2.f * static_cast<float>(world.getLimitX()),
-        2.f * static_cast<float>(world.getLimitY())
-    );
+sf::View Renderer::makeWorldView(sf::Vector2u windowSize, const sf::FloatRect& area) const {
+    const sf::Vector2f worldSize(2.f * world.getLimitX(), 2.f * world.getLimitY());
+    sf::View view({0.f, 0.f}, worldSize);
 
-    sf::View view(sf::Vector2f(0.f, 0.f), worldSize);
-    view.setViewport(letterboxViewport(worldSize, sf::Vector2f(windowSize)));
-
+    // 1) uklopi svet u area (frakcije unutar area)
+    const sf::FloatRect f = letterboxViewport(worldSize, area.size);
+    // 2) prevedi u frakcije celog prozora (to traži setViewport)
+    const sf::Vector2f w(windowSize);
+    view.setViewport(sf::FloatRect(
+        {(area.position.x + f.position.x * area.size.x) / w.x,
+         (area.position.y + f.position.y * area.size.y) / w.y},
+        { f.size.x * area.size.x / w.x,
+          f.size.y * area.size.y / w.y}));
     return view;
 }
 
 
-void Renderer::render(sf::RenderWindow& window) const {
-
-    window.setView(makeWorldView(window.getSize()));
-
+void Renderer::render(sf::RenderWindow& window, const sf::FloatRect& area) const {
+    window.setView(makeWorldView(window.getSize(), area));
     drawWorld(window);
     drawAgents(window);
 }

@@ -1,0 +1,17 @@
+{
+    "seed": 42,
+    "numAgents": 100,
+    "maxSteps": 1000,
+    "generations": 500,
+
+    "elitismRatio": 0.08,
+    "mutationRatio": 0.20,
+    "mutationStrength": 0.20,
+    "tournamentSize": 5,
+
+    "fitnessProgress": 10.0,
+    "fitnessSurvival": 0.02,
+    "fitnessGoal": 1000.0,
+    "fitnessCollision": 50.0,
+    "fitnessSpeed": 400.0
+}

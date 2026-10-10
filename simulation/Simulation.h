@@ -10,6 +10,8 @@
 #include "Population.h"
 #include "../world/World.h"
 #include "../configuration/Params.h"
+#include "../evolution/GAParams.h"
+#include "../fitness/Fitness.h"
 #include "../rendering/Renderer.h"
 #include "../statistics/Statistics.h"
 
@@ -20,6 +22,8 @@ class Simulation {
     Population& population;
     Renderer renderer;
 
+    FitnessWeights weights;
+
     std::vector<Episode> episodes;
     int maxSteps;
     int generation;
@@ -27,25 +31,30 @@ class Simulation {
     Statistics statistics;
 
 public:
-    Simulation(World& world, Population& population, int maxSteps = Params::maxSteps);
+    Simulation(World& world, Population& population, int maxSteps = Params::maxSteps,
+               const FitnessWeights& weights = FitnessWeights{});
 
     void startGeneration();
 
     void update();
 
-    void render(sf::RenderWindow& window) const;
+    void render(sf::RenderWindow& window, const sf::FloatRect& area) const;
 
     bool generationFinished() const;
     const std::vector<Episode>& getEpisodes() const;
     int getGeneration() const;
     int getMaxSteps() const;
 
-    void recordGenerationStats();
+    std::size_t bestAgentIndex() const;
 
-    void printGenerationStats() const;
-    static void printGenerationStatsHeader();
+    void recordGenerationStats(const GAParams& gaParams);
 
     const Statistics& getStatistics() const;
+
+    // Primenjuje se samo na granici generacije (poziva Trainer).
+    void setWeights(const FitnessWeights& w);
+
+    void updateBestAgentHighlight() const;
 };
 
 inline const std::vector<Episode>& Simulation::getEpisodes() const { return episodes; }

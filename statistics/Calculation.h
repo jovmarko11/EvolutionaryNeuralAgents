@@ -12,16 +12,16 @@
 
 class Calculation {
 public:
-    GenerationStatistics calculate(int generation, const std::vector<EpisodeResult>& results);
+    GenerationStatistics calculate(int generation, const std::vector<EpisodeResult>& results, const FitnessWeights& weights);
 
 private:
-    static std::vector<double> computeFitnessValues(const std::vector<EpisodeResult>& results);
+    static std::vector<double> computeFitnessValues(const std::vector<EpisodeResult>& results, const FitnessWeights& weights);
 
     static void computeFitnessDistribution(const std::vector<double>& fitnessValues, GenerationStatistics& gs);
     static void computeOutcomeCounts(const std::vector<EpisodeResult>& results, GenerationStatistics& gs);
     static void computeProgressStats(const std::vector<EpisodeResult>& results, GenerationStatistics& gs);
     static void computeStepStats(const std::vector<EpisodeResult>& results, GenerationStatistics& gs);
-    static FitnessBreakdown findBestBreakdown(const std::vector<EpisodeResult>& results, const std::vector<double>& fitnessValues);
+    static FitnessBreakdown findBestBreakdown(const std::vector<EpisodeResult>& results, const std::vector<double>& fitnessValues, const FitnessWeights& weights);
 };
 
 

@@ -272,7 +272,7 @@ void Agent::drawBody(sf::RenderWindow& window) const {
         static_cast<float>(position.y)
     ));
 
-    shape.setFillColor(toSFML(drawParams.color));
+    shape.setFillColor(toSFML(highlighted ? Params::BestAgentColor : drawParams.color));
 
     window.draw(shape);
 }

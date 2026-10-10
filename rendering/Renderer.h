@@ -24,7 +24,7 @@ private:
     Population& population;
 
     // Kamera za svet: koji deo sveta se vidi i gde u prozoru se prikazuje.
-    sf::View makeWorldView(sf::Vector2u windowSize) const;
+    sf::View makeWorldView(sf::Vector2u windowSize, const sf::FloatRect &area) const;
 
     void drawWorld(sf::RenderWindow& window) const;
     void drawAgents(sf::RenderWindow& window) const;
@@ -32,7 +32,8 @@ private:
 public:
     Renderer(World& world, Population& population);
 
-    void render(sf::RenderWindow& window) const;
+    void render(sf::RenderWindow &window, const sf::FloatRect &area) const;
+
 };
 
 #endif //EVOLUTIONARYNEURALAGENTS_RENDERER_H

@@ -46,7 +46,7 @@ World SceneBuilder::buildWorld() {
 }
 
 
-Population SceneBuilder::buildPopulation(const World& world) {
+Population SceneBuilder::buildPopulation(const World& world, int numAgents) {
     const Vec2 spawn(Params::spawnX, Params::spawnY);
     const Vec2 heading = Vec2(1.0, 0.0).rotated(Params::spawnHeading);
 
@@ -61,7 +61,7 @@ Population SceneBuilder::buildPopulation(const World& world) {
     }
 
     Population population;
-    for (int i = 0; i < Params::numAgents; i++) {
+    for (int i = 0; i < numAgents; i++) {
         population.addAgent(Agent(spawn, heading));
     }
 

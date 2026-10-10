@@ -64,6 +64,7 @@ private:
     // --- stanje zivota ---
     bool alive;
     SimStatus lastStatus;   // zasto je agent prestao da bude ziv
+    bool highlighted;
 
     void initializeSensors();
     void updateSensorDirections();
@@ -78,6 +79,7 @@ private:
 
     void drawBody(sf::RenderWindow& window) const;
     void drawSensors(sf::RenderWindow& window) const;
+
 
 public:
     Agent(
@@ -106,6 +108,8 @@ public:
     NeuralNetwork& getBrain();
 
     void draw(sf::RenderWindow& window) const override;
+
+    void setHighlighted(bool value);
 };
 
 inline Vec2 Agent::getPosition() const { return position; }
@@ -117,5 +121,7 @@ inline SimStatus Agent::getLastStatus() const { return lastStatus; }
 
 inline const NeuralNetwork& Agent::getBrain() const { return brain; }
 inline NeuralNetwork& Agent::getBrain() { return brain; }
+
+inline void Agent::setHighlighted(bool value) { highlighted = value; }
 
 #endif // EVOLUTIONARYNEURALAGENTS_AGENT_H

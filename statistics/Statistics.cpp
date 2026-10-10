@@ -4,8 +4,11 @@
 
 #include "Statistics.h"
 
-void Statistics::processGeneration(int generation, const std::vector<EpisodeResult>& results) {
-    const GenerationStatistics statistics = calculation.calculate(generation, results);
+Statistics::Statistics(const FitnessWeights& weights) : weights(weights) {}
+
+void Statistics::processGeneration(int generation, const std::vector<EpisodeResult>& results, const GAParams& gaParams) {
+    GenerationStatistics statistics = calculation.calculate(generation, results, weights);
+    statistics.gaParams = gaParams;
 
     storage.add(statistics);
 }

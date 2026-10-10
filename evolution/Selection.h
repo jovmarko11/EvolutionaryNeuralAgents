@@ -15,6 +15,10 @@ public:
     explicit Selection(int tournamentSize);
 
     const Individual& tournament(const std::vector<Individual>& population) const;
+
+
+    void setTournamentSize(const int ts) { this->tournamentSize = ts; }
+    int getTournamentSize() const { return this->tournamentSize; }
 };
 
 

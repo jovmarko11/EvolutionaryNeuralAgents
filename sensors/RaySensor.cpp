@@ -30,7 +30,7 @@ void RaySensor::draw(sf::RenderWindow& window, const Vec2& origin, double normal
     const Vec2 endpoint = origin + direction * (clamped * Params::sensorMaxDistance);
 
     const sf::Color lineColor = hit
-        ? sf::Color(255, 90, 90, 200)
+        ? sf::Color(255, 90, 90, 125)
         : sf::Color(255, 255, 255, 60);
 
     sf::VertexArray line(sf::PrimitiveType::Lines);

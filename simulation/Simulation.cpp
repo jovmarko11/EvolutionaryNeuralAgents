@@ -5,14 +5,15 @@
 #include "Simulation.h"
 
 #include <algorithm>
-#include <cstdio>
 
-Simulation::Simulation(World& world, Population& population, int maxSteps)
+Simulation::Simulation(World& world, Population& population, int maxSteps, const FitnessWeights& weights)
     : world(world),
       population(population),
       renderer(world, population),
       maxSteps(maxSteps),
-      generation(0) {}
+      generation(0),
+      statistics(weights),
+      weights(weights) {}
 
 
 void Simulation::startGeneration() {
@@ -49,11 +50,12 @@ bool Simulation::generationFinished() const {
 }
 
 
-void Simulation::render(sf::RenderWindow& window) const {
-    renderer.render(window);
+void Simulation::render(sf::RenderWindow& window, const sf::FloatRect& area) const {
+    updateBestAgentHighlight();
+    renderer.render(window, area);
 }
 
-void Simulation::recordGenerationStats() {
+void Simulation::recordGenerationStats(const GAParams& gaParams) {
     if (episodes.empty()) return;
 
     std::vector<EpisodeResult> results;
@@ -63,24 +65,37 @@ void Simulation::recordGenerationStats() {
         results.push_back(episode.getResult());
     }
 
-    statistics.processGeneration(generation, results);
+    statistics.processGeneration(generation, results, gaParams);
 }
 
-void Simulation::printGenerationStats() const {
-    if (statistics.getHistory().empty()) return;
+std::size_t Simulation::bestAgentIndex() const {
+    // called when episodes vector is not empty
+    std::size_t bestIndex = 0;
+    double bestFitness = fitness(episodes[0].getResult(), weights);
 
-    const GenerationStatistics& gs = statistics.getLatest();
-
-    std::printf("%4d | %8.1f %7.1f %7.1f %7.1f %7.1f | %5d %5d %5d | %7.2f %7.1f | %7.1f %5.1f %6.1f %6.1f\n",
-        gs.generation,
-        gs.bestFitness, gs.meanFitness, gs.medianFitness, gs.worstFitness, gs.stdevFitness,
-        gs.reach, gs.crash, gs.tout,
-        gs.maxProgress, gs.averageSteps,
-        gs.bestBreakdown.progress, gs.bestBreakdown.survival, gs.bestBreakdown.goal, gs.bestBreakdown.collision);
+    for (std::size_t i = 0; i < episodes.size(); ++i) {
+        double candidateFitness = fitness(episodes[i].getResult(), weights);
+        if (candidateFitness > bestFitness) {
+            bestFitness = candidateFitness;
+            bestIndex = i;
+        }
+    }
+    return bestIndex;
 }
 
-void Simulation::printGenerationStatsHeader() {
-    std::printf("%4s | %8s %7s %7s %7s %7s | %5s %5s %5s | %7s %7s | %7s %5s %6s %6s\n",
-        "gen", "best", "mean", "median", "worst", "stdev",
-        "reach", "crash", "tout", "maxProg", "avgStep", "prog", "surv", "goal", "crash");
+void Simulation::updateBestAgentHighlight() const {
+    if (episodes.empty()) return;
+
+    for (Agent& agent : population.getAgents()) {
+        agent.setHighlighted(false);
+    }
+
+    std::size_t bestIndex = bestAgentIndex();
+
+    population.getAgents()[bestIndex].setHighlighted(true);
+}
+
+void Simulation::setWeights(const FitnessWeights& w) {
+    weights = w;
+    statistics.setWeights(w);
 }

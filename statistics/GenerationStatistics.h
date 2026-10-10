@@ -5,6 +5,7 @@
 #ifndef EVOLUTIONARYNEURALAGENTS_GENERATIONSTATISTICS_H
 #define EVOLUTIONARYNEURALAGENTS_GENERATIONSTATISTICS_H
 #include "../fitness/Fitness.h"
+#include "../evolution/GAParams.h"
 
 struct GenerationStatistics {
     int generation = 0;
@@ -29,6 +30,11 @@ struct GenerationStatistics {
     int maxStepsTaken = 0;
 
     FitnessBreakdown bestBreakdown{};
+
+    // Parametri GA kojima je OVA generacija proizvedena (snapshot uzet pre
+    // eventualne adaptacije za sledecu). Za generaciju 0, koja je nasumicna,
+    // to su pocetne vrednosti.
+    GAParams gaParams{};
 };
 
 

@@ -15,13 +15,15 @@
 
 class Statistics {
 private:
+    FitnessWeights weights;
     Calculation calculation;
     Storage storage;
     Export exporter;
 
 public:
+    explicit Statistics(const FitnessWeights& weights = FitnessWeights{});
 
-    void processGeneration(int generation, const std::vector<EpisodeResult>& results);
+    void processGeneration(int generation, const std::vector<EpisodeResult>& results, const GAParams& gaParams);
 
     const GenerationStatistics& getLatest() const;
 
@@ -30,6 +32,8 @@ public:
     void exportToCSV(const std::string& filename) const;
 
     void clear();
+
+    void setWeights(const FitnessWeights& w) { weights = w; }
 
 };
 

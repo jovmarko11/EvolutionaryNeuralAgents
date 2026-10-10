@@ -14,6 +14,13 @@ public:
     Mutation(double mutationRatio, double mutationStrength);
 
     void mutate(std::vector<double>& genome) const;
+
+    void setMutationRatio(double mr) { this->mutationRatio = mr; }
+    void setMutationStrength(double ms) { this->mutationStrength = ms; }
+
+    double getMutationRatio() const { return this->mutationRatio; }
+    double getMutationStrength() const { return this->mutationStrength; }
+
 };
 
 

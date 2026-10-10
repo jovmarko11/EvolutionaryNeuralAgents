@@ -6,13 +6,15 @@
 #define EVOLUTIONARYNEURALAGENTS_FITNESS_H
 #include "../simulation/Episode.h"
 
-namespace FitnessWeights {
-    inline constexpr double progress = 10.0;
-    inline constexpr double survival = 0.02;
-    inline constexpr double goal = 1000.0;
-    inline constexpr double collision = 50.0;
-    inline constexpr double speed = 400.0;
-}
+struct FitnessWeights {
+    double progress = 10.0;
+    double survival = 0.02;
+    double goal = 1000.0;
+    double collision = 50.0;
+    double speed = 400.0;
+
+    bool operator==(const FitnessWeights&) const = default;
+};
 
 struct FitnessBreakdown {
     double progress = 0;
@@ -24,10 +26,10 @@ struct FitnessBreakdown {
     double total() const { return progress + survival + goal + collision + speed; }
 };
 
-FitnessBreakdown fitnessBreakdown(const EpisodeResult& result);
+FitnessBreakdown fitnessBreakdown(const EpisodeResult& result, const FitnessWeights& weights);
 
-inline double fitness(const EpisodeResult& result) {
-    return fitnessBreakdown(result).total();
+inline double fitness(const EpisodeResult& result, const FitnessWeights& weights) {
+    return fitnessBreakdown(result, weights).total();
 }
 
 

@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure
+        run: cmake -B build -DBUILD_TESTS_ONLY=ON
+
+      - name: Build tests
+        run: cmake --build build --target tests
+
+      - name: Run tests
+        run: ctest --test-dir build --output-on-failure

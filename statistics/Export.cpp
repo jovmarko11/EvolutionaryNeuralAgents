@@ -24,7 +24,8 @@ void Export::exportToCSV(const std::vector<GenerationStatistics>& statistics,
             "reach,crash,tout,"
             "maxProgress,meanProgress,"
             "averageSteps,minStepsTaken,maxStepsTaken,"
-            "bestProgress,bestSurvival,bestGoal,bestCollision,bestSpeed\n";
+            "bestProgress,bestSurvival,bestGoal,bestCollision,bestSpeed,"
+            "elitismRatio,mutationRatio,mutationStrength,tournamentSize\n";
 
     for (const GenerationStatistics& gs : statistics) {
         file << gs.generation << ','
@@ -35,6 +36,8 @@ void Export::exportToCSV(const std::vector<GenerationStatistics>& statistics,
              << gs.averageSteps << ',' << gs.minStepsTaken << ',' << gs.maxStepsTaken << ','
              << gs.bestBreakdown.progress << ',' << gs.bestBreakdown.survival << ','
              << gs.bestBreakdown.goal << ',' << gs.bestBreakdown.collision << ','
-             << gs.bestBreakdown.speed << '\n';
+             << gs.bestBreakdown.speed << ','
+             << gs.gaParams.elitismRatio << ',' << gs.gaParams.mutationRatio << ','
+             << gs.gaParams.mutationStrength << ',' << gs.gaParams.tournamentSize << '\n';
     }
 }

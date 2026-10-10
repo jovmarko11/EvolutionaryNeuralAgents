@@ -9,29 +9,29 @@
 #include <cmath>
 #include <numeric>
 
-GenerationStatistics Calculation::calculate(int generation, const std::vector<EpisodeResult>& results) {
+GenerationStatistics Calculation::calculate(int generation, const std::vector<EpisodeResult>& results, const FitnessWeights& weights) {
     assert(!results.empty());
 
     GenerationStatistics gs{};
     gs.generation = generation;
 
-    const std::vector<double> fitnessValues = computeFitnessValues(results);
+    const std::vector<double> fitnessValues = computeFitnessValues(results, weights);
 
     computeFitnessDistribution(fitnessValues, gs);
     computeOutcomeCounts(results, gs);
     computeProgressStats(results, gs);
     computeStepStats(results, gs);
-    gs.bestBreakdown = findBestBreakdown(results, fitnessValues);
+    gs.bestBreakdown = findBestBreakdown(results, fitnessValues, weights);
 
     return gs;
 }
 
-std::vector<double> Calculation::computeFitnessValues(const std::vector<EpisodeResult>& results) {
+std::vector<double> Calculation::computeFitnessValues(const std::vector<EpisodeResult>& results, const FitnessWeights& weights) {
     std::vector<double> values;
     values.reserve(results.size());
 
     for (const EpisodeResult& r : results) {
-        values.push_back(fitness(r));
+        values.push_back(fitness(r, weights));
     }
 
     return values;
@@ -102,9 +102,9 @@ void Calculation::computeStepStats(const std::vector<EpisodeResult>& results, Ge
 }
 
 FitnessBreakdown Calculation::findBestBreakdown(const std::vector<EpisodeResult>& results,
-    const std::vector<double>& fitnessValues) {
+    const std::vector<double>& fitnessValues, const FitnessWeights& weights) {
     const auto bestIt = std::max_element(fitnessValues.begin(), fitnessValues.end());
     const std::size_t bestIndex = static_cast<std::size_t>(std::distance(fitnessValues.begin(), bestIt));
 
-    return fitnessBreakdown(results[bestIndex]);
+    return fitnessBreakdown(results[bestIndex], weights);
 }
