@@ -74,19 +74,20 @@ add_executable(tests
         tests/GeneticAlgorithmTest.cpp
         tests/CalculationTest.cpp
 
-        math/Matrix.cpp
-        math/Random.cpp
-        fitness/Fitness.cpp
-        evolution/Selection.cpp
-        evolution/Crossover.cpp
-        evolution/Mutation.cpp
-        evolution/GeneticAlgorithm.cpp
-        statistics/Calculation.cpp
+        src/core/math/Matrix.cpp
+        src/core/math/Random.cpp
+        src/learning/fitness/Fitness.cpp
+        src/learning/evolution/Selection.cpp
+        src/learning/evolution/Crossover.cpp
+        src/learning/evolution/Mutation.cpp
+        src/learning/evolution/GeneticAlgorithm.cpp
+        src/learning/statistics/Calculation.cpp
         tests/JSONTest.cpp
-        configuration/ExperimentConfig.cpp
+        src/app/config/ExperimentConfig.cpp
 )
 
 target_link_libraries(tests PRIVATE Catch2::Catch2WithMain nlohmann_json::nlohmann_json)
+target_include_directories(tests PRIVATE src)
 
 include(CTest)
 include(Catch)
@@ -94,117 +95,119 @@ catch_discover_tests(tests)
 
 if(NOT BUILD_TESTS_ONLY)
 add_executable(EvolutionaryNeuralAgents
-        main.cpp
+        src/main.cpp
 
-        app/FixedTimestep.cpp
-        app/FixedTimestep.h
+        src/app/FixedTimestep.cpp
+        src/app/FixedTimestep.h
 
-        configuration/Params.h
+        src/app/config/Params.h
+        src/app/config/TrainingParams.h
 
-        math/Vec2.h
-        math/Matrix.cpp
-        math/Matrix.h
-        math/Random.cpp
-        math/Random.h
+        src/core/math/Vec2.h
+        src/core/math/Matrix.cpp
+        src/core/math/Matrix.h
+        src/core/math/Random.cpp
+        src/core/math/Random.h
 
-        neural/Layer.cpp
-        neural/Layer.h
-        neural/NeuralNetwork.cpp
-        neural/NeuralNetwork.h
+        src/core/neural/Layer.cpp
+        src/core/neural/Layer.h
+        src/core/neural/NeuralNetwork.cpp
+        src/core/neural/NeuralNetwork.h
 
-        sensors/RaySensor.cpp
-        sensors/RaySensor.h
-        sensors/ScanResult.h
+        src/model/sensors/RaySensor.cpp
+        src/model/sensors/RaySensor.h
+        src/model/sensors/ScanResult.h
 
-        world/World.cpp
-        world/World.h
-        world/Agent.cpp
-        world/Agent.h
-        world/AgentAction.h
-        world/SimStatus.h
-        world/Target.cpp
-        world/Target.h
-        world/Obstacle.cpp
-        world/Obstacle.h
-        world/obstacles/CircleObstacle.cpp
-        world/obstacles/CircleObstacle.h
-        world/obstacles/RectObstacle.cpp
-        world/obstacles/RectObstacle.h
+        src/model/world/World.cpp
+        src/model/world/World.h
+        src/model/world/Agent.cpp
+        src/model/world/Agent.h
+        src/model/world/AgentAction.h
+        src/model/world/SimStatus.h
+        src/model/world/Target.cpp
+        src/model/world/Target.h
+        src/model/world/Obstacle.cpp
+        src/model/world/Obstacle.h
+        src/model/world/obstacles/CircleObstacle.cpp
+        src/model/world/obstacles/CircleObstacle.h
+        src/model/world/obstacles/RectObstacle.cpp
+        src/model/world/obstacles/RectObstacle.h
 
-        simulation/Simulation.cpp
-        simulation/Simulation.h
-        simulation/Episode.cpp
-        simulation/Episode.h
-        simulation/Population.cpp
-        simulation/Population.h
-        simulation/SceneBuilder.cpp
-        simulation/SceneBuilder.h
+        src/model/simulation/Simulation.cpp
+        src/model/simulation/Simulation.h
+        src/model/simulation/Episode.cpp
+        src/model/simulation/Episode.h
+        src/model/simulation/Population.cpp
+        src/model/simulation/Population.h
+        src/model/simulation/SceneBuilder.cpp
+        src/model/simulation/SceneBuilder.h
 
-        rendering/Renderer.cpp
-        rendering/Renderer.h
-        rendering/Viewport.cpp
-        rendering/Viewport.h
-        rendering/Drawable.cpp
-        rendering/Drawable.h
-        rendering/DrawParams.h
-        rendering/Color.h
-        rendering/ColorUtil.h
+        src/ui/rendering/Renderer.cpp
+        src/ui/rendering/Renderer.h
+        src/ui/rendering/Viewport.cpp
+        src/ui/rendering/Viewport.h
+        src/ui/rendering/Drawable.cpp
+        src/ui/rendering/Drawable.h
+        src/ui/rendering/DrawParams.h
+        src/ui/rendering/Color.h
+        src/ui/rendering/ColorUtil.h
 
-        fitness/Fitness.h
-        fitness/Fitness.cpp
+        src/learning/fitness/Fitness.h
+        src/learning/fitness/Fitness.cpp
 
-        evolution/GeneticAlgorithm.cpp
-        evolution/GeneticAlgorithm.h
-        evolution/Selection.cpp
-        evolution/Selection.h
-        evolution/Crossover.cpp
-        evolution/Crossover.h
-        evolution/Mutation.cpp
-        evolution/Mutation.h
+        src/learning/evolution/GeneticAlgorithm.cpp
+        src/learning/evolution/GeneticAlgorithm.h
+        src/learning/evolution/Selection.cpp
+        src/learning/evolution/Selection.h
+        src/learning/evolution/Crossover.cpp
+        src/learning/evolution/Crossover.h
+        src/learning/evolution/Mutation.cpp
+        src/learning/evolution/Mutation.h
 
-        app/Trainer.cpp
-        app/Trainer.h
-        app/Program.cpp
-        app/Program.h
-        evolution/Individual.h
-        evolution/GAParams.h
-        gui/UILayer.cpp
-        gui/UILayer.h
-        statistics/Statistics.cpp
-        statistics/Statistics.h
-        statistics/GenerationStatistics.h
-        statistics/Calculation.cpp
-        statistics/Calculation.h
-        statistics/Storage.cpp
-        statistics/Storage.h
-        statistics/Export.cpp
-        statistics/Export.h
-        statistics/ConsoleReporter.cpp
-        statistics/ConsoleReporter.h
-        app/HeadlessRunner.cpp
-        app/HeadlessRunner.h
-        configuration/ExperimentConfig.h
-        configuration/ExperimentConfig.cpp
-        evolution/ParamController.cpp
-        evolution/ParamController.h
-        gui/panels/Panel.cpp
-        gui/panels/Panel.h
-        gui/Layout.cpp
-        gui/Layout.h
-        gui/UIData.h
-        gui/panels/PlaceholderPanel.cpp
-        gui/panels/PlaceholderPanel.h
-        gui/panels/TransportPanel.cpp
-        gui/panels/TransportPanel.h
-        gui/panels/StatisticsPanel.cpp
-        gui/panels/StatisticsPanel.h
-        gui/panels/ParametersPanel.cpp
-        gui/panels/ParametersPanel.h
-        gui/panels/StatusPanel.cpp
-        gui/panels/StatusPanel.h
+        src/app/Trainer.cpp
+        src/app/Trainer.h
+        src/app/Program.cpp
+        src/app/Program.h
+        src/learning/evolution/Individual.h
+        src/learning/evolution/GAParams.h
+        src/ui/gui/UILayer.cpp
+        src/ui/gui/UILayer.h
+        src/learning/statistics/Statistics.cpp
+        src/learning/statistics/Statistics.h
+        src/learning/statistics/GenerationStatistics.h
+        src/learning/statistics/Calculation.cpp
+        src/learning/statistics/Calculation.h
+        src/learning/statistics/Storage.cpp
+        src/learning/statistics/Storage.h
+        src/learning/statistics/Export.cpp
+        src/learning/statistics/Export.h
+        src/learning/statistics/ConsoleReporter.cpp
+        src/learning/statistics/ConsoleReporter.h
+        src/app/HeadlessRunner.cpp
+        src/app/HeadlessRunner.h
+        src/app/config/ExperimentConfig.h
+        src/app/config/ExperimentConfig.cpp
+        src/learning/evolution/ParamController.cpp
+        src/learning/evolution/ParamController.h
+        src/ui/gui/panels/Panel.cpp
+        src/ui/gui/panels/Panel.h
+        src/ui/gui/Layout.cpp
+        src/ui/gui/Layout.h
+        src/ui/gui/UIData.h
+        src/ui/gui/panels/PlaceholderPanel.cpp
+        src/ui/gui/panels/PlaceholderPanel.h
+        src/ui/gui/panels/TransportPanel.cpp
+        src/ui/gui/panels/TransportPanel.h
+        src/ui/gui/panels/StatisticsPanel.cpp
+        src/ui/gui/panels/StatisticsPanel.h
+        src/ui/gui/panels/ParametersPanel.cpp
+        src/ui/gui/panels/ParametersPanel.h
+        src/ui/gui/panels/StatusPanel.cpp
+        src/ui/gui/panels/StatusPanel.h
 )
 
 # Putanja do assets/ (fontovi) ugradjena u program; radi iz CLion-a bez kopiranja fajlova.
+target_include_directories(EvolutionaryNeuralAgents PRIVATE src)
 target_compile_definitions(EvolutionaryNeuralAgents PRIVATE
         ENA_ASSETS_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
 

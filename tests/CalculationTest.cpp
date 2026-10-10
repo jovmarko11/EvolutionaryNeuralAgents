@@ -1,6 +1,6 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/catch_approx.hpp>
-#include "../statistics/Calculation.h"
+#include "learning/statistics/Calculation.h"
 
 using Catch::Approx;
 

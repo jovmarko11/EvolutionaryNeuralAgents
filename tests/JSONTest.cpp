@@ -1,7 +1,7 @@
 //
 // Created by Marko Jovanovic on 30. 9. 2026..
 //
-#include "../configuration/ExperimentConfig.h"
+#include "app/config/ExperimentConfig.h"
 
 #include "catch2/catch_test_macros.hpp"
 TEST_CASE("ExperimentConfig JSON round-trip", "[config][io]") {

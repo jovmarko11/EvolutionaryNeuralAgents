@@ -5,7 +5,7 @@
 
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/catch_approx.hpp>
-#include "../math/Matrix.h"
+#include "core/math/Matrix.h"
 
 using Catch::Approx;
 

@@ -1,6 +1,6 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/catch_approx.hpp>
-#include "../math/Vec2.h"
+#include "core/math/Vec2.h"
 
 using Catch::Approx;
 

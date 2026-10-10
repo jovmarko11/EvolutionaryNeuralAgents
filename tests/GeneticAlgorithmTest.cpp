@@ -1,9 +1,9 @@
 #include <catch2/catch_test_macros.hpp>
-#include "../evolution/GeneticAlgorithm.h"
-#include "../evolution/Selection.h"
-#include "../evolution/Crossover.h"
-#include "../evolution/Mutation.h"
-#include "../math/Random.h"
+#include "learning/evolution/GeneticAlgorithm.h"
+#include "learning/evolution/Selection.h"
+#include "learning/evolution/Crossover.h"
+#include "learning/evolution/Mutation.h"
+#include "core/math/Random.h"
 
 #include <cmath>
 
